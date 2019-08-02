@@ -147,7 +147,7 @@ func run(ctx context.Context, suffix, zoneID, invokerID string) error {
 				break
 			}
 		}
-		if name == "" {
+		if !valid(name) {
 			continue
 		}
 		ch := &route53.Change{
@@ -213,6 +213,23 @@ func runningInstances(ctx context.Context, svc *ec2.EC2) ([]*ec2.Instance, error
 		}
 	}
 	return out, nil
+}
+
+func valid(name string) bool {
+	if name == "" {
+		return false
+	}
+	for _, r := range name {
+		switch {
+		case 'a' <= r && r <= 'z':
+		case 'A' <= r && r <= 'Z':
+		case '0' <= r && r <= '9':
+		case r == '-':
+		default:
+			return false
+		}
+	}
+	return true
 }
 
 func init() { log.SetFlags(0) }
