@@ -182,6 +182,21 @@ func run(ctx context.Context, suffix, zoneID, invokerID string) error {
 		log.Println("removing:", name)
 		changes = append(changes, ch)
 	}
+	// https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/DNSLimitations.html?shortFooter=true#limits-api-requests
+	//
+	// ResourceRecord elements
+	// A request cannot contain more than 1,000 ResourceRecord elements.
+	// When the value of the Action element is UPSERT, each ResourceRecord
+	// element is counted twice.
+	//
+	// Maximum number of characters
+	// The sum of the number of characters (including spaces) in all Value
+	// elements in a request cannot exceed 32,000 characters. When the value
+	// of the Action element is UPSERT, each character in a Value element is
+	// counted twice.
+	//
+	// TODO: call API in batches of no more than 500 records
+	// see https://play.golang.org/p/KZEk2qhcA-F
 	input := &route53.ChangeResourceRecordSetsInput{
 		HostedZoneId: &zoneID,
 		ChangeBatch: &route53.ChangeBatch{
