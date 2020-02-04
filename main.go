@@ -1,28 +1,29 @@
-// Command awsns creates/updates A/CNAME records for given DNS zone in AWS Route
-// 53 for all running non-spot ec2 instances based on their "Name" tag.
+// Command awsns creates/updates A/CNAME records for given DNS zone in AWS
+// Route 53 for all running non-spot ec2 instances based on their "Name" tag.
 //
 // It can be run manually with -zone flag set to hosted zone ID and -suffix set
 // to suffix to construct domain names from. Domain names constructed by
 // concatenating value of the "Name" instance tag with suffix value set by
 // -suffix flag.
 //
-// I.e. if ec2 instance tag "Name" is set to "jenkins" and program is called
-// with -suffix=".foo.example.com", then constructed name would be
+// I.e., if ec2 instance tag "Name" is set to "jenkins" and the program is
+// called with -suffix=".foo.example.com", then the constructed name would be
 // jenkins.foo.example.com. Zone ID must match either example.com or
 // foo.example.com zone in Route 53 console.
 //
-// Program may remove existing A/CNAME records matching given suffix if no
+// The program may remove existing A/CNAME records matching given suffix if no
 // corresponding non-spot ec2 instances found running.
 //
-// If ec2 instance has public DNS name, program creates CNAME record pointing to
-// such name, otherwise it creates A record pointing to public IP address.
+// If ec2 instance has public DNS name, the program creates CNAME record
+// pointing to such name; otherwise, it creates A record pointing to the public
+// IP address.
 //
-// Program may also be run as AWS Lambda invoked by CloudWatch event created as
-// "EC2 Instance State-change Notification" for "running" state. It then looks
-// up suffix and zone id in SUFFIX and ZONE environment variables. Lambda needs
-// permissions to describe EC2 instances and list/update Route 53 records;
-// required permissions can be satisfied by using the following AWS managed
-// policies: AmazonEC2ReadOnlyAccess, AmazonRoute53FullAccess,
+// The program may also be run as AWS Lambda invoked by CloudWatch event
+// created as "EC2 Instance State-change Notification" for "running" state. It
+// then looks up suffix and zone id in SUFFIX and ZONE environment variables.
+// Lambda needs permissions to describe EC2 instances and list/update Route 53
+// records; required permissions can be satisfied by using the following AWS
+// managed policies: AmazonEC2ReadOnlyAccess, AmazonRoute53FullAccess,
 // AWSLambdaBasicExecutionRole.
 package main
 
