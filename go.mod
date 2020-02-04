@@ -1,7 +1,7 @@
 module github.com/artyom/awsns
 
 require (
-	github.com/artyom/autoflags v1.1.0
+	github.com/artyom/autoflags v1.1.1
 	github.com/aws/aws-lambda-go v1.13.3
 	github.com/aws/aws-sdk-go v1.14.25
 	github.com/go-ini/ini v1.38.1 // indirect
