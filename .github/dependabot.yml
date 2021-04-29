@@ -1,0 +1,31 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  assignees:
+  - artyom
+  ignore:
+  - dependency-name: github.com/aws/aws-lambda-go
+    versions:
+    - ">= 1.14.a, < 1.15"
+  - dependency-name: github.com/aws/aws-lambda-go
+    versions:
+    - "> 1.15.0, < 2"
+  - dependency-name: github.com/aws/aws-sdk-go
+    versions:
+    - "> 1.28.9, < 1.29"
+  - dependency-name: github.com/aws/aws-sdk-go
+    versions:
+    - ">= 1.29.a, < 1.30"
+  - dependency-name: github.com/aws/aws-sdk-go
+    versions:
+    - "> 1.30.1"
+  - dependency-name: github.com/aws/aws-sdk-go
+    versions:
+    - "> 1.30.1, < 1.31"
+  - dependency-name: github.com/aws/aws-sdk-go
+    versions:
+    - ">= 1.31.a, < 1.32"
